@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FluidLinq")]
-[assembly: AssemblyDescription("Linq extension library which allow a more fluid way to express Linq queries when parsing XML to deserialize to Objects")]
+[assembly: AssemblyTitle("FluidLinqTest")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Christian Giacomi")]
-[assembly: AssemblyProduct("FluidLinq")]
-[assembly: AssemblyCopyright("Copyright © 2012 Christian Giacomi http://www.christiangiacomi.com")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("FluidLinqTest")]
+[assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e8e1f366-9b29-4177-98d5-cc50df4edaa1")]
+[assembly: Guid("2600e853-cb81-40ac-a297-e33ac0b951b1")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,6 +31,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.5")]
-[assembly: AssemblyFileVersion("0.1.5")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

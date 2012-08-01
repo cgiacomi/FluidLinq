@@ -147,6 +147,9 @@ namespace FluidLinq
         /// </summary>
         public static XDocument GetXDocument(this XmlNode node)
         {
+            if (node == null)
+                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
+
             XDocument xDoc = new XDocument();
             using (XmlWriter xmlWriter = xDoc.CreateWriter())
                 node.WriteTo(xmlWriter);
@@ -158,6 +161,9 @@ namespace FluidLinq
         /// </summary>
         public static XElement GetXElement(this XmlNode node)
         {
+            if (node == null)
+                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
+
             XDocument xDoc = new XDocument();
             using (XmlWriter xmlWriter = xDoc.CreateWriter())
                 node.WriteTo(xmlWriter);
@@ -169,6 +175,9 @@ namespace FluidLinq
         /// </summary>
         public static XmlNode GetXmlNode(this XElement element)
         {
+            if (element == null)
+                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
+
             using (XmlReader xmlReader = element.CreateReader())
             {
                 XmlDocument xmlDoc = new XmlDocument();
