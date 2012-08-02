@@ -28,12 +28,21 @@ namespace FluidLinq
     {
         private static Dictionary<Type, Func<string, object>> ConversionTargets = new Dictionary<Type, Func<string, object>>()
                                                                         {
-                                                                            {typeof(int), str => System.Convert.ToInt32(str)},
-                                                                            {typeof(long), str => Convert.ToInt64(str)},
-                                                                            {typeof(float), str => float.Parse(str)},
-                                                                            {typeof(bool), str => bool.Parse(str)},
-                                                                            {typeof(string), str => str},
-                                                                            {typeof(DateTime), str => DateTime.Parse(str)},
+                                                                            {typeof(Byte), str => Convert.ToByte(str)},
+                                                                            {typeof(SByte), str => Convert.ToSByte(str)},
+                                                                            {typeof(Int16), str => Convert.ToInt16(str)},
+                                                                            {typeof(Int32), str => Convert.ToInt32(str)},
+                                                                            {typeof(Int64), str => Convert.ToInt64(str)},
+                                                                            {typeof(UInt16), str => Convert.ToUInt16(str)},
+                                                                            {typeof(UInt32), str => Convert.ToUInt32(str)},
+                                                                            {typeof(UInt64), str => Convert.ToUInt64(str)},
+                                                                            {typeof(Single), str => Convert.ToSingle(str)},
+                                                                            {typeof(Double), str => Convert.ToDouble(str)},                                                                           
+                                                                            {typeof(Boolean), str => Convert.ToBoolean(str)},
+                                                                            {typeof(Char), str => Convert.ToChar(str)},
+                                                                            {typeof(Decimal), str => Convert.ToDecimal(str)},
+                                                                            {typeof(String), str => str},
+                                                                            {typeof(DateTime), str => Convert.ToDateTime(str)},
                                                                         };
         /// <summary>
         /// Gets the outer XML from the XElement
@@ -42,6 +51,9 @@ namespace FluidLinq
         /// <returns>the Outer XML</returns>
         public static string OuterXml(this XElement element)
         {
+            if (element == null)
+                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
+
             var xReader = element.CreateReader();
             xReader.MoveToContent();
             return xReader.ReadOuterXml();
@@ -54,6 +66,9 @@ namespace FluidLinq
         /// <returns>the inner XML</returns>
         public static string InnerXml(this XElement element)
         {
+            if (element == null)
+                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
+
             var xReader = element.CreateReader();
             xReader.MoveToContent();
             return xReader.ReadInnerXml();
