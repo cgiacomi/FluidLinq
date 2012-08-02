@@ -5,6 +5,9 @@ FluidLinq is a small Linq extension library that makes it very easy to parse XML
 The library is meant to be used to deserialize objects from XML. It reduces the code that needs to be written and ensures that you do not run into casting exception.
 
 
+Thanks goes to Rune Allan Petersen who helped to convert an idea into implementation. 
+
+
 ## Requirements
 
 FluidLinq requires .NET4
