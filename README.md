@@ -10,19 +10,20 @@ Thanks goes to [runeapetersen](https://github.com/runeapetersen) who helped conv
 
 ## Requirements
 
-FluidLinq requires .NET4
+FluidLinq requires .NET4 runtime.
 
 The project requires Visual Studio 2010
 
 
 ## Installation
 
-Presently you need to download the source code and build the project but it will be added to NuGet shortly...
+FluidLinq is available for download from [NuGet](http://nuget.org/packages/FluidLinq) or if you prefer you can download the source and compile it yourself.
+
 
 
 ## Use
 
-Coming soon...
+Coming soon... in the mean time you can take a look at the unit tests and see how the extension methods are meant to be used.
 
 
 ## License 
