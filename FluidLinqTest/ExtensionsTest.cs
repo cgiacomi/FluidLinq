@@ -23,11 +23,6 @@ namespace FluidLinqTest
             doc.LoadXml(xmlDoc);
         }
 
-        [TestCleanup]
-        public void Teardown()
-        {
-        }
-
         [TestMethod]
         public void TestGetXDocument_valid_xmlnode_success()
         {
@@ -137,91 +132,7 @@ namespace FluidLinqTest
             XElement xelem = root.GetXElement();
 
             string result = xelem.AttributeValueOrDefault<string>("invalid_attribute");
-            Assert.IsNull(result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_valid_int_attribute_name_success()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            int result = xelem.AttributeValueOrDefault<int>("pages");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(180, result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_wrong_int_attribute_name_returns_default()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            int result = xelem.AttributeValueOrDefault<int>("invalid_attribute");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(default(int), result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_valid_long_attribute_name_success()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            long result = xelem.AttributeValueOrDefault<long>("pages");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(180, result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_wrong_long_attribute_name_returns_default()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            long result = xelem.AttributeValueOrDefault<long>("invalid_attribute");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(default(long), result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_valid_bool_attribute_name_success()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            bool result = xelem.AttributeValueOrDefault<bool>("available");
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_wrong_bool_attribute_name_returns_default()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            bool result = xelem.AttributeValueOrDefault<bool>("invalid_attribute");
-            Assert.AreEqual(default(bool), result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_valid_float_attribute_name_success()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            float result = xelem.AttributeValueOrDefault<float>("rating");
-            Assert.AreEqual(9.5, result);
-        }
-
-        [TestMethod]
-        public void TestAttributeValueOrDefault_wrong_float_attribute_name_returns_default()
-        {
-            XmlNode root = doc.FirstChild;
-            XElement xelem = root.GetXElement();
-
-            float result = xelem.AttributeValueOrDefault<float>("invalid_attribute");
-            Assert.AreEqual(default(float), result);
+            Assert.AreEqual(default(string), result);
         }
 
         [TestMethod]
@@ -250,9 +161,8 @@ namespace FluidLinqTest
         {
             XElement xelem = null;
 
-            int result = xelem.AttributeValueOrDefault<int>("ISBN");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(default(int), result);
+            string result = xelem.AttributeValueOrDefault<string>("ISBN");
+            Assert.AreEqual(default(string), result);
         }
     }
 }
