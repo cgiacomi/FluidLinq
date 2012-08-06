@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FluidLinq</id>
+    <version>0.2.0</version>
+    <authors>Christian Giacomi</authors>
+    <owners>Christian Giacomi</owners>
+    <description>Linq extension library for Fluid parsing of XML</description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/cgiacomi/FluidLinq</projectUrl>
+    <licenseUrl>https://github.com/cgiacomi/FluidLinq/blob/master/LICENSE</licenseUrl>
+    <tags>.NET Linq XML Parsing Objects Fluid</tags>
+  </metadata>
+  <files>
+    <file src="FluidLinq\bin\Release\FluidLinq.dll" target="lib\net40" />
+  </files>
+</package>
