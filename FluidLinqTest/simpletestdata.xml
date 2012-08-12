@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<conversion>
+  <byte>255</byte>
+  <sbyte>127</sbyte>
+  <int16>32767</int16>
+  <int32>2147483647</int32>
+  <int64>9223372036854775807</int64>
+  <uint16>65535</uint16>
+  <uint32>4294967295</uint32>
+  <uint64>18446744073709551615</uint64>
+  <bool>true</bool>
+  <char>c</char>
+  <decimal>25162.1378</decimal>
+  <string>Christian Giacomi</string>
+  <datetime>01/22/1984</datetime>
+  <nonvalid>123ERROR</nonvalid>
+  <single>1.11111</single>
+</conversion>

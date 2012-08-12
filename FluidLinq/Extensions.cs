@@ -18,187 +18,128 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 
 namespace FluidLinq
 {
+
+
     /// <summary>
     /// Extension methods for the XElement class
     /// </summary>
     public static class Extensions
     {
-        private static Dictionary<Type, Func<string, object>> ConversionTargets = new Dictionary<Type, Func<string, object>>()
-                                                                        {
-                                                                            {typeof(Byte), str => Convert.ToByte(str)},
-                                                                            {typeof(SByte), str => Convert.ToSByte(str)},
-                                                                            {typeof(Int16), str => Convert.ToInt16(str)},
-                                                                            {typeof(Int32), str => Convert.ToInt32(str)},
-                                                                            {typeof(Int64), str => Convert.ToInt64(str)},
-                                                                            {typeof(UInt16), str => Convert.ToUInt16(str)},
-                                                                            {typeof(UInt32), str => Convert.ToUInt32(str)},
-                                                                            {typeof(UInt64), str => Convert.ToUInt64(str)},
-                                                                            {typeof(Single), str => Convert.ToSingle(str)},
-                                                                            {typeof(Double), str => Convert.ToDouble(str)},                                                                           
-                                                                            {typeof(Boolean), str => Convert.ToBoolean(str)},
-                                                                            {typeof(Char), str => Convert.ToChar(str)},
-                                                                            {typeof(Decimal), str => Convert.ToDecimal(str)},
-                                                                            {typeof(String), str => str},
-                                                                            {typeof(DateTime), str => Convert.ToDateTime(str)},
-                                                                        };
-        /// <summary>
-        /// Gets the outer XML from the XElement
-        /// </summary>
-        /// <param name="element">the element</param>
-        /// <returns>the Outer XML</returns>
-        public static string OuterXml(this XElement element)
-        {
-            if (element == null)
-                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
-
-            var xReader = element.CreateReader();
-            xReader.MoveToContent();
-            return xReader.ReadOuterXml();
-        }
-
-        /// <summary>
-        /// Gets the Inner XML of an XElement
-        /// </summary>
-        /// <param name="element">the element</param>
-        /// <returns>the inner XML</returns>
-        public static string InnerXml(this XElement element)
-        {
-            if (element == null)
-                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
-
-            var xReader = element.CreateReader();
-            xReader.MoveToContent();
-            return xReader.ReadInnerXml();
-        }
-
-        /// <summary>
-        /// Allows a safe way to retrieve attribute values from an element
-        /// </summary>
-        /// <param name="element">A reference to the element object</param>
-        /// <param name="attributeName">The name of the attribute</param>
-        /// <returns>The attribute content or null</returns>
-        public static T AttributeValueOrDefault<T>(this XElement element, string attributeName)
-        {
-            XAttribute attr = null;
-
-            if (element != null)
-                attr = element.Attribute(attributeName);
-
-            return (attr == null) ? default(T) : (T)ConversionTargets[typeof(T)](attr.Value);
-        }
-
-        /// <summary>
-        /// Allows a safe way to retrieve the value of an attribute for a child element in the current element.
-        /// </summary>
-        /// <typeparam name="T">the type for the conversion table</typeparam>
-        /// <param name="childElement">the name of the child element</param>
-        /// <param name="attributeName">the name of the attribute whose value you want</param>
-        /// <returns>the converted attribute value or default(T)</returns>
-        public static T AttributeValueForElementOrDefault<T>(this XElement parentElement,
-                                                                    string childElement,
-                                                                    string attributeName)
-        {
-            if (parentElement != null)
-            {
-                XElement child = parentElement.Element(childElement);
-
-                XAttribute attr = null;
-                if (child != null)
+        private static readonly Dictionary<Type, Func<String, IFormatProvider, Object>> ConversionTargets =
+            new Dictionary<Type, Func<String, IFormatProvider, Object>>
                 {
-                    attr = child.Attribute(attributeName);
-                    return (attr == null) ? default(T) : (T)ConversionTargets[typeof(T)](attr.Value);
-                }
-            }
+                    { typeof(Byte), (str, formatProvider) => Convert.ToByte(str, formatProvider) },
+                    { typeof(SByte), (str, formatProvider) => Convert.ToSByte(str, formatProvider) },
+                    { typeof(Int16), (str, formatProvider) => Convert.ToInt16(str, formatProvider) },
+                    { typeof(Int32), (str, formatProvider) => Convert.ToInt32(str, formatProvider) },
+                    { typeof(Int64), (str, formatProvider) => Convert.ToInt64(str, formatProvider) },
+                    { typeof(UInt16), (str, formatProvider) => Convert.ToUInt16(str, formatProvider) },
+                    { typeof(UInt32), (str, formatProvider) => Convert.ToUInt32(str, formatProvider) },
+                    { typeof(UInt64), (str, formatProvider) => Convert.ToUInt64(str, formatProvider) },
+                    { typeof(Single), (str, formatProvider) => Convert.ToSingle(str, formatProvider) },
+                    { typeof(Double), (str, formatProvider) => Convert.ToDouble(str, formatProvider) },
+                    { typeof(Boolean), (str, formatProvider) => Convert.ToBoolean(str, formatProvider) },
+                    { typeof(Char), (str, formatProvider) => Convert.ToChar(str, formatProvider) },
+                    { typeof(Decimal), (str, formatProvider) => Convert.ToDecimal(str, formatProvider) },
+                    { typeof(String), (str, formatProvider) => str },
+                    { typeof(DateTime), (str, formatProvider) => Convert.ToDateTime(str, formatProvider) },
+                };
 
-            return default(T);
+        public static void AddConversionMap<T>(Func<String, IFormatProvider, Object> conversionBehaviour)
+        {
+            if (!ConversionTargets.ContainsKey(typeof(T)))
+            {
+                ConversionTargets.Add(typeof(T), conversionBehaviour);
+            }
+            else
+            {
+                throw new ApplicationException("This conversion behaviour is already registered.");
+            }
         }
 
-
-        /// <summary>
-        /// Allows a safe way to retrieve the value of a nested element for a child element in the current element.
-        /// </summary>
-        /// <typeparam name="T">the type for the conversion table</typeparam>
-        public static T ElementValueForElementOrDefault<T>(this XElement rootElement,
-                                                                string parentElementName,
-                                                                string childElementName)
+        public static void RemoveConversionMap<T>()
         {
-            if (rootElement != null)
+            if (ConversionTargets.ContainsKey(typeof(T)))
             {
-                XElement parentElement = rootElement.Element(parentElementName);
-                if (parentElement != null)
+                ConversionTargets.Remove(typeof(T));
+            }
+        }
+
+        public static XDocument ToXDocument(this XmlDocument doc)
+        {
+            XDocument result;
+
+            if (doc == null)
+            {
+                result = new XDocument();
+            }
+            else
+            {
+                MemoryStream stream = new MemoryStream();
+                doc.Save(stream);
+                stream.Position = 0;
+                result = XDocument.Load(stream);
+            }
+
+            return result;
+        }
+
+        public static IEnumerable<T> ConvertTo<T>(
+            this IEnumerable<XElement> source,
+            ErrorBehaviour errorBehaviour = ErrorBehaviour.ErrorsReturnAsDefaultValues,
+            IFormatProvider formatProvider = null)
+        {
+            if (!ConversionTargets.ContainsKey(typeof(T))) throw new ApplicationException("This type conversion is not registered.");
+
+            if (formatProvider == null) formatProvider = CultureInfo.InvariantCulture;
+
+            switch (errorBehaviour)
+            {
+
+                case ErrorBehaviour.ErrorsReturnAsDefaultValues:
+                    return source.TryConvertTo<T>(formatProvider);
+                default:
+                    return source.ConvertTo<T>(formatProvider);
+            }
+        }
+
+        private static IEnumerable<T> ConvertTo<T>(this IEnumerable<XElement> source, IFormatProvider formatProvider)
+        {
+            IEnumerable<T> result =
+                source.Select(element => (T)ConversionTargets[typeof(T)](element.Value, formatProvider));
+
+            return result;
+        }
+
+        private static IEnumerable<T> TryConvertTo<T>(this IEnumerable<XElement> source, IFormatProvider formatProvider)
+        {
+            IEnumerable<T> result = source.Select(
+                element =>
                 {
-                    XElement childElement = parentElement.Element(childElementName);
-                    if (childElement != null)
-                        return (T)ConversionTargets[typeof(T)](childElement.Value);
-                }
-            }
+                    try
+                    {
+                        return (T)ConversionTargets[typeof(T)](element.Value, formatProvider);
+                    }
+                    catch
+                    {
+                        return default(T);
+                    }
+                });
 
-            return default(T);
+            return result;
         }
+    }
 
-        /// <summary>
-        /// Allows a safe way to retrieve element data
-        /// </summary>
-        /// <param name="element">A reference to the element object</param>
-        /// <returns>Element content or an empty string</returns>
-        public static T ElementValueOrDefault<T>(this XElement element, string value)
-        {
-            if (element != null)
-            {
-                XElement child = element.Element(value);
+    public enum ErrorBehaviour
+    {
+        ErrorsThrowExceptions,
 
-                if (child != null)
-                    return (T)ConversionTargets[typeof(T)](child.Value);
-            }
-
-            return default(T);
-        }
-
-        /// <summary>
-        /// Converts an XmlNode to an XDocument for LINQ queries
-        /// </summary>
-        public static XDocument GetXDocument(this XmlNode node)
-        {
-            if (node == null)
-                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
-
-            XDocument xDoc = new XDocument();
-            using (XmlWriter xmlWriter = xDoc.CreateWriter())
-                node.WriteTo(xmlWriter);
-            return xDoc;
-        }
-
-        /// <summary>
-        /// Converts an XmlNode to an XElement for LINQ queries
-        /// </summary>
-        public static XElement GetXElement(this XmlNode node)
-        {
-            if (node == null)
-                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
-
-            XDocument xDoc = new XDocument();
-            using (XmlWriter xmlWriter = xDoc.CreateWriter())
-                node.WriteTo(xmlWriter);
-            return xDoc.Root;
-        }
-
-        /// <summary>
-        /// Converts an XElement to an XmlNode
-        /// </summary>
-        public static XmlNode GetXmlNode(this XElement element)
-        {
-            if (element == null)
-                throw new InvokeMethodFromNullObjectException("Cannot call this extension method on a null object.");
-
-            using (XmlReader xmlReader = element.CreateReader())
-            {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(xmlReader);
-                return xmlDoc;
-            }
-        }
+        ErrorsReturnAsDefaultValues
     }
 }
