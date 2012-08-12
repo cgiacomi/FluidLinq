@@ -49,6 +49,104 @@ namespace FluidLinq
                     { typeof(Decimal), (str, formatProvider) => Convert.ToDecimal(str, formatProvider) },
                     { typeof(String), (str, formatProvider) => str },
                     { typeof(DateTime), (str, formatProvider) => Convert.ToDateTime(str, formatProvider) },
+                    { typeof(Byte?), (str, formatProvider) =>
+                            {
+                                Byte? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToByte(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(SByte?),  (str, formatProvider) =>
+                            {
+                                SByte? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToSByte(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Int16?),  (str, formatProvider) =>
+                            {
+                                Int16? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToInt16(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Int32?),  (str, formatProvider) =>
+                            {
+                                Int32? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToInt32(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Int64?), (str, formatProvider) =>
+                            {
+                                Int64? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToInt64(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(UInt16?), (str, formatProvider) =>
+                            {
+                                UInt16? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToUInt16(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(UInt32?), (str, formatProvider) =>
+                            {
+                                UInt32? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToUInt32(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(UInt64?), (str, formatProvider) =>
+                            {
+                                UInt64? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToUInt64(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Single?), (str, formatProvider) =>
+                            {
+                                Single? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToSingle(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Double?), (str, formatProvider) =>
+                            {
+                                Double? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToDouble(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Boolean?), (str, formatProvider) =>
+                            {
+                                Boolean? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToBoolean(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Char?), (str, formatProvider) =>
+                            {
+                                Char? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToChar(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(Decimal?), (str, formatProvider) =>
+                            {
+                                Decimal? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToDecimal(str, formatProvider);
+                                return result;
+                            }
+                        },
+                    { typeof(DateTime?), (str, formatProvider) =>
+                            {
+                                DateTime? result = null;
+                                if (!String.IsNullOrEmpty(str)) result = Convert.ToDateTime(str, formatProvider);
+                                return result;
+                            }
+                        },
                 };
 
         public static void AddConversionMap<T>(Func<String, IFormatProvider, Object> conversionBehaviour)
