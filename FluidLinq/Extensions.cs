@@ -24,8 +24,6 @@ using System.Linq;
 
 namespace FluidLinq
 {
-
-
     /// <summary>
     /// Extension methods for the XElement class
     /// </summary>
@@ -34,119 +32,35 @@ namespace FluidLinq
         private static readonly Dictionary<Type, Func<String, IFormatProvider, Object>> ConversionTargets =
             new Dictionary<Type, Func<String, IFormatProvider, Object>>
                 {
-                    { typeof(Byte), (str, formatProvider) => Convert.ToByte(str, formatProvider) },
-                    { typeof(SByte), (str, formatProvider) => Convert.ToSByte(str, formatProvider) },
-                    { typeof(Int16), (str, formatProvider) => Convert.ToInt16(str, formatProvider) },
-                    { typeof(Int32), (str, formatProvider) => Convert.ToInt32(str, formatProvider) },
-                    { typeof(Int64), (str, formatProvider) => Convert.ToInt64(str, formatProvider) },
-                    { typeof(UInt16), (str, formatProvider) => Convert.ToUInt16(str, formatProvider) },
-                    { typeof(UInt32), (str, formatProvider) => Convert.ToUInt32(str, formatProvider) },
-                    { typeof(UInt64), (str, formatProvider) => Convert.ToUInt64(str, formatProvider) },
-                    { typeof(Single), (str, formatProvider) => Convert.ToSingle(str, formatProvider) },
-                    { typeof(Double), (str, formatProvider) => Convert.ToDouble(str, formatProvider) },
-                    { typeof(Boolean), (str, formatProvider) => Convert.ToBoolean(str, formatProvider) },
-                    { typeof(Char), (str, formatProvider) => Convert.ToChar(str, formatProvider) },
-                    { typeof(Decimal), (str, formatProvider) => Convert.ToDecimal(str, formatProvider) },
-                    { typeof(String), (str, formatProvider) => str },
-                    { typeof(DateTime), (str, formatProvider) => Convert.ToDateTime(str, formatProvider) },
-                    { typeof(Byte?), (str, formatProvider) =>
-                            {
-                                Byte? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToByte(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(SByte?),  (str, formatProvider) =>
-                            {
-                                SByte? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToSByte(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Int16?),  (str, formatProvider) =>
-                            {
-                                Int16? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToInt16(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Int32?),  (str, formatProvider) =>
-                            {
-                                Int32? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToInt32(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Int64?), (str, formatProvider) =>
-                            {
-                                Int64? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToInt64(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(UInt16?), (str, formatProvider) =>
-                            {
-                                UInt16? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToUInt16(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(UInt32?), (str, formatProvider) =>
-                            {
-                                UInt32? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToUInt32(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(UInt64?), (str, formatProvider) =>
-                            {
-                                UInt64? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToUInt64(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Single?), (str, formatProvider) =>
-                            {
-                                Single? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToSingle(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Double?), (str, formatProvider) =>
-                            {
-                                Double? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToDouble(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Boolean?), (str, formatProvider) =>
-                            {
-                                Boolean? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToBoolean(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Char?), (str, formatProvider) =>
-                            {
-                                Char? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToChar(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(Decimal?), (str, formatProvider) =>
-                            {
-                                Decimal? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToDecimal(str, formatProvider);
-                                return result;
-                            }
-                        },
-                    { typeof(DateTime?), (str, formatProvider) =>
-                            {
-                                DateTime? result = null;
-                                if (!String.IsNullOrEmpty(str)) result = Convert.ToDateTime(str, formatProvider);
-                                return result;
-                            }
-                        },
+                    { typeof(Byte), DefaultConversionFunctions.Byte },
+                    { typeof(SByte), DefaultConversionFunctions.SByte },
+                    { typeof(Int16), DefaultConversionFunctions.Int16 },
+                    { typeof(Int32), DefaultConversionFunctions.Int32 },
+                    { typeof(Int64), DefaultConversionFunctions.Int64 },
+                    { typeof(UInt16), DefaultConversionFunctions.UInt16 },
+                    { typeof(UInt32), DefaultConversionFunctions.UInt32 },
+                    { typeof(UInt64), DefaultConversionFunctions.UInt64 },
+                    { typeof(Single), DefaultConversionFunctions.Single },
+                    { typeof(Double), DefaultConversionFunctions.Double },
+                    { typeof(Boolean), DefaultConversionFunctions.Boolean },
+                    { typeof(Char), DefaultConversionFunctions.Char },
+                    { typeof(Decimal), DefaultConversionFunctions.Decimal },
+                    { typeof(String), DefaultConversionFunctions.String },
+                    { typeof(DateTime), DefaultConversionFunctions.DateTime },
+                    { typeof(Byte?), DefaultConversionFunctions.NullableByte },
+                    { typeof(SByte?), DefaultConversionFunctions.NullableSByte },
+                    { typeof(Int16?), DefaultConversionFunctions.NullableInt16 },
+                    { typeof(Int32?), DefaultConversionFunctions.NullableInt32 },
+                    { typeof(Int64?), DefaultConversionFunctions.NullableInt64 },
+                    { typeof(UInt16?), DefaultConversionFunctions.NullableUInt16 },
+                    { typeof(UInt32?), DefaultConversionFunctions.NullableUInt32 },
+                    { typeof(UInt64?), DefaultConversionFunctions.NullableUInt64 },
+                    { typeof(Single?), DefaultConversionFunctions.NullableSingle },
+                    { typeof(Double?), DefaultConversionFunctions.NullableDouble },
+                    { typeof(Boolean?), DefaultConversionFunctions.NullableBoolean },
+                    { typeof(Char?), DefaultConversionFunctions.NullableChar },
+                    { typeof(Decimal?), DefaultConversionFunctions.NullableDecimal },
+                    { typeof(DateTime?), DefaultConversionFunctions.NullableDateTime },
                 };
 
         public static void AddConversionMap<T>(Func<String, IFormatProvider, Object> conversionBehaviour)
@@ -157,7 +71,7 @@ namespace FluidLinq
             }
             else
             {
-                throw new ApplicationException("This conversion behaviour is already registered.");
+                throw new ApplicationException("A conversion map for this type has already been registered.");
             }
         }
 
