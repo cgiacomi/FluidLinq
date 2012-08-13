@@ -33,7 +33,7 @@ namespace FluidLinqTest
         {
             Extensions.AddConversionMap<TestStub>((s, from) => new TestStub { Value = s });
             Assert.IsTrue(true); 
-            Extensions.RemoveConversionMap<TestStub>();
+            Extensions.RemoveConversionMap(typeof(TestStub));
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace FluidLinqTest
         {
             Extensions.AddConversionMap<TestStub>((s, from) => new TestStub { Value = s });
             Extensions.AddConversionMap<TestStub>((s, from) => new TestStub { Value = s });
-            Extensions.RemoveConversionMap<TestStub>();
+            Extensions.RemoveConversionMap(typeof(TestStub));
         }
 
         public class TestStub

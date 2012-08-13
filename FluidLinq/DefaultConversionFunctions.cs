@@ -4,7 +4,7 @@ namespace FluidLinq
 
     internal static class DefaultConversionFunctions
     {
-        public static Func<string, IFormatProvider, object> Byte
+        public static Func<string, IFormatProvider, Byte> Byte
         {
             get
             {
@@ -12,7 +12,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> SByte
+        public static Func<string, IFormatProvider, SByte> SByte
         {
             get
             {
@@ -20,7 +20,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Int16
+        public static Func<string, IFormatProvider, Int16> Int16
         {
             get
             {
@@ -28,7 +28,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> UInt64
+        public static Func<string, IFormatProvider, UInt64> UInt64
         {
             get
             {
@@ -36,7 +36,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> UInt32
+        public static Func<string, IFormatProvider, UInt32> UInt32
         {
             get
             {
@@ -44,7 +44,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> UInt16
+        public static Func<string, IFormatProvider, UInt16> UInt16
         {
             get
             {
@@ -52,7 +52,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Int64
+        public static Func<string, IFormatProvider, Int64> Int64
         {
             get
             {
@@ -60,7 +60,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Int32
+        public static Func<string, IFormatProvider, Int32> Int32
         {
             get
             {
@@ -68,7 +68,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> DateTime
+        public static Func<string, IFormatProvider, DateTime> DateTime
         {
             get
             {
@@ -76,7 +76,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> String
+        public static Func<string, IFormatProvider, String> String
         {
             get
             {
@@ -84,7 +84,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Decimal
+        public static Func<string, IFormatProvider, Decimal> Decimal
         {
             get
             {
@@ -92,7 +92,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Char
+        public static Func<string, IFormatProvider, Char> Char
         {
             get
             {
@@ -100,7 +100,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Boolean
+        public static Func<string, IFormatProvider, Boolean> Boolean
         {
             get
             {
@@ -108,7 +108,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Double
+        public static Func<string, IFormatProvider, Double> Double
         {
             get
             {
@@ -116,7 +116,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> Single
+        public static Func<string, IFormatProvider, Single> Single
         {
             get
             {
@@ -124,7 +124,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableDateTime
+        public static Func<string, IFormatProvider, Nullable<DateTime>> NullableDateTime
         {
             get
             {
@@ -137,7 +137,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableDecimal
+        public static Func<string, IFormatProvider, Nullable<Decimal>> NullableDecimal
         {
             get
             {
@@ -150,7 +150,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableChar
+        public static Func<string, IFormatProvider, Nullable<Char>> NullableChar
         {
             get
             {
@@ -163,7 +163,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableBoolean
+        public static Func<string, IFormatProvider, Nullable<Boolean>> NullableBoolean
         {
             get
             {
@@ -176,7 +176,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableDouble
+        public static Func<string, IFormatProvider, Nullable<Double>> NullableDouble
         {
             get
             {
@@ -189,7 +189,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableSingle
+        public static Func<string, IFormatProvider, Nullable<Single>> NullableSingle
         {
             get
             {
@@ -202,7 +202,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableUInt64
+        public static Func<string, IFormatProvider, Nullable<UInt64>> NullableUInt64
         {
             get
             {
@@ -215,7 +215,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableUInt32
+        public static Func<string, IFormatProvider, Nullable<UInt32>> NullableUInt32
         {
             get
             {
@@ -228,7 +228,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableUInt16
+        public static Func<string, IFormatProvider, Nullable<UInt16>> NullableUInt16
         {
             get
             {
@@ -241,7 +241,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableInt64
+        public static Func<string, IFormatProvider, Nullable<Int64>> NullableInt64
         {
             get
             {
@@ -254,7 +254,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableInt32
+        public static Func<string, IFormatProvider, Nullable<Int32>> NullableInt32
         {
             get
             {
@@ -267,7 +267,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableInt16
+        public static Func<string, IFormatProvider, Nullable<Int16>> NullableInt16
         {
             get
             {
@@ -280,7 +280,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableSByte
+        public static Func<string, IFormatProvider, Nullable<SByte>> NullableSByte
         {
             get
             {
@@ -293,7 +293,7 @@ namespace FluidLinq
             }
         }
 
-        public static Func<string, IFormatProvider, object> NullableByte
+        public static Func<string, IFormatProvider, Nullable<Byte>> NullableByte
         {
             get
             {

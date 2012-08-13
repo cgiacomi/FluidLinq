@@ -29,8 +29,8 @@ namespace FluidLinq
     /// </summary>
     public static class Extensions
     {
-        private static readonly Dictionary<Type, Func<String, IFormatProvider, Object>> ConversionTargets =
-            new Dictionary<Type, Func<String, IFormatProvider, Object>>
+        private static readonly Dictionary<Type, MulticastDelegate> ConversionTargets =
+            new Dictionary<Type, MulticastDelegate>
                 {
                     { typeof(Byte), DefaultConversionFunctions.Byte },
                     { typeof(SByte), DefaultConversionFunctions.SByte },
@@ -63,7 +63,7 @@ namespace FluidLinq
                     { typeof(DateTime?), DefaultConversionFunctions.NullableDateTime },
                 };
 
-        public static void AddConversionMap<T>(Func<String, IFormatProvider, Object> conversionBehaviour)
+        public static void AddConversionMap<T>(Func<String, IFormatProvider, T> conversionBehaviour)
         {
             if (!ConversionTargets.ContainsKey(typeof(T)))
             {
@@ -75,11 +75,11 @@ namespace FluidLinq
             }
         }
 
-        public static void RemoveConversionMap<T>()
+        public static void RemoveConversionMap(Type theType)
         {
-            if (ConversionTargets.ContainsKey(typeof(T)))
+            if (ConversionTargets.ContainsKey(theType))
             {
-                ConversionTargets.Remove(typeof(T));
+                ConversionTargets.Remove(theType);
             }
         }
 
@@ -124,7 +124,7 @@ namespace FluidLinq
         private static IEnumerable<T> ConvertTo<T>(this IEnumerable<XElement> source, IFormatProvider formatProvider)
         {
             IEnumerable<T> result =
-                source.Select(element => (T)ConversionTargets[typeof(T)](element.Value, formatProvider));
+                source.Select(element => DoMap<T>(element.Value, formatProvider));
 
             return result;
         }
@@ -133,17 +133,27 @@ namespace FluidLinq
         {
             IEnumerable<T> result = source.Select(
                 element =>
-                {
-                    try
                     {
-                        return (T)ConversionTargets[typeof(T)](element.Value, formatProvider);
-                    }
-                    catch
-                    {
-                        return default(T);
-                    }
-                });
+                        try
+                        {
+                            return DoMap<T>(element.Value, formatProvider);
+                        }
+                        catch
+                        {
+                            return default(T);
+                        }
+                    });
 
+            return result;
+        }
+
+        private static TResult DoMap<TResult>(string inputValue, IFormatProvider formatProvider = null)
+        {
+            if (formatProvider == null) formatProvider = System.Globalization.CultureInfo.InvariantCulture;
+
+            Func<string, IFormatProvider, TResult> mapper =
+                (Func<string, IFormatProvider, TResult>)ConversionTargets[typeof(TResult)];
+            TResult result = mapper(inputValue, formatProvider);
             return result;
         }
     }
