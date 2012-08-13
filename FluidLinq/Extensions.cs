@@ -113,7 +113,6 @@ namespace FluidLinq
 
             switch (errorBehaviour)
             {
-
                 case ErrorBehaviour.ErrorsReturnAsDefaultValues:
                     return source.TryConvertTo<T>(formatProvider);
                 default:
@@ -147,10 +146,8 @@ namespace FluidLinq
             return result;
         }
 
-        private static TResult DoMap<TResult>(string inputValue, IFormatProvider formatProvider = null)
+        private static TResult DoMap<TResult>(string inputValue, IFormatProvider formatProvider)
         {
-            if (formatProvider == null) formatProvider = System.Globalization.CultureInfo.InvariantCulture;
-
             Func<string, IFormatProvider, TResult> mapper =
                 (Func<string, IFormatProvider, TResult>)ConversionTargets[typeof(TResult)];
             TResult result = mapper(inputValue, formatProvider);
