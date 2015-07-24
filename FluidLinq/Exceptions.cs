@@ -18,6 +18,7 @@ using System;
 
 namespace FluidLinq
 {
+    [Serializable]
     public class InvokeMethodFromNullObjectException : Exception
     {
         public InvokeMethodFromNullObjectException(string message)
